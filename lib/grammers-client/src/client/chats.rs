@@ -134,6 +134,7 @@ impl ParticipantIter {
                 use tl::enums::channels::ChannelParticipants::*;
 
                 iter.request.limit = iter.determine_limit(MAX_PARTICIPANT_LIMIT);
+                iter.request.offset = iter.fetched as i32;
                 let (count, participants, users) = match iter.client.invoke(&iter.request).await? {
                     Participants(p) => (p.count, p.participants, p.users),
                     NotModified => panic!("API returned Dialogs::NotModified even though hash = 0"),
